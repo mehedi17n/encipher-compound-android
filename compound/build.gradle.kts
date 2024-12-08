@@ -224,6 +224,7 @@ val removeOldScreenshotsTask = tasks.register("removeOldSnapshots") {
         snapshotsDir.deleteRecursively()
     }
 }
+
 afterEvaluate {
     tasks.findByName("recordRoborazzi")?.dependsOn(removeOldScreenshotsTask)
     tasks.findByName("recordRoborazziDebug")?.dependsOn(removeOldScreenshotsTask)
