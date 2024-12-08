@@ -25,6 +25,7 @@ plugins {
     alias(libs.plugins.kover)
     alias(libs.plugins.roborazzi)
     alias(libs.plugins.dependencycheck)
+    id("maven-publish")
 }
 
 android {
@@ -96,6 +97,16 @@ kotlin {
 configure<org.owasp.dependencycheck.gradle.extension.DependencyCheckExtension> {
     (properties["NVD_API_KEY"] as? String)?.let { nvd.apiKey = it }
     nvd.delay = 1600
+}
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
 }
 
 mavenPublishing {
